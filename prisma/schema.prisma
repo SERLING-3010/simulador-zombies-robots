@@ -1,0 +1,25 @@
+model Character {
+  id      Int      @id @default(autoincrement()) // [cite: 30]
+  name    String   // [cite: 31]
+  type    String   // [cite: 32]
+  health  Float    // [cite: 33]
+  attack  Float    // [cite: 34]
+  defense Float    // [cite: 35]
+  speed   Float    // [cite: 36]
+
+  battlesAsP1 Battle[] @relation("Char1")
+  battlesAsP2 Battle[] @relation("Char2")
+  battlesWon  Battle[] @relation("Winner")
+}
+
+model Battle {
+  id             Int        @id @default(autoincrement()) // [cite: 38]
+  character_1_id Int        // [cite: 39]
+  character_2_id Int        // [cite: 40]
+  winner_id      Int?       // [cite: 41]
+  turns          Int        // [cite: 42]
+
+  char1   Character  @relation("Char1", fields: [character_1_id], references: [id])
+  char2   Character  @relation("Char2", fields: [character_2_id], references: [id])
+  winner  Character? @relation("Winner", fields: [winner_id], references: [id])
+}
